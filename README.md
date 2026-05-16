@@ -2,7 +2,7 @@
 
 > AI-powered career readiness platform that analyzes your skills, detects gaps, and generates personalized learning roadmaps.
 
-![SkillBridge AI](https://img.shields.io/badge/Powered%20by-Gemini%20AI-blue?style=for-the-badge)
+![SkillBridge AI](https://img.shields.io/badge/Powered%20by-Groq%20AI-orange?style=for-the-badge)
 ![Supabase](https://img.shields.io/badge/Database-Supabase-green?style=for-the-badge)
 ![Node.js](https://img.shields.io/badge/Backend-Node.js-brightgreen?style=for-the-badge)
 
@@ -10,7 +10,7 @@
 
 ## ✨ Features
 
-- **AI Resume Analysis** — Upload a PDF and Gemini AI extracts your skills automatically
+- **AI Resume Analysis** — Upload a PDF or DOCX and Groq AI extracts your skills automatically
 - **Skill Gap Detection** — Compare your profile against industry role requirements
 - **Personalized Roadmap** — Step-by-step learning plan with real documentation links
 - **Aptitude Testing** — AI-generated quizzes with anti-cheating proctoring
@@ -26,8 +26,9 @@
 | Frontend | Vanilla HTML, CSS, JavaScript |
 | Backend | Node.js + Express |
 | Database & Auth | Supabase (PostgreSQL) |
-| AI | Google Gemini 2.5 Flash |
+| AI | Groq (LLaMA 3.3 70B) |
 | PDF Parsing | pdf-parse |
+| DOCX Parsing | mammoth |
 
 ---
 
@@ -36,18 +37,18 @@
 ### Prerequisites
 - Node.js 18+
 - A [Supabase](https://supabase.com) account (free)
-- A [Google AI Studio](https://aistudio.google.com) Gemini API key (free)
+- A [Groq](https://console.groq.com) API key (free)
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/YOUR_USERNAME/skill-verify.git
-cd skill-verify
+git clone https://github.com/yaminijairaj/SkillBridge.git
+cd SkillBridge
 ```
 
 ### 2. Set up Supabase
 1. Create a new Supabase project at [supabase.com](https://supabase.com)
 2. Go to **SQL Editor** and run the contents of [`supabase_setup.sql`](supabase_setup.sql)
-3. Go to **Authentication → Providers → Email** and turn OFF "Confirm email" (for local testing)
+3. Go to **Authentication → Providers → Email** → turn ON **"Enable email provider"** and turn OFF **"Confirm email"**
 4. Copy your **Project URL** and **Publishable Key** from **Settings → API**
 
 ### 3. Configure frontend
@@ -64,7 +65,7 @@ cp .env.example .env
 ```
 Edit `server/.env`:
 ```
-GEMINI_API_KEY=your_gemini_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ### 5. Install and run
@@ -81,7 +82,7 @@ Open `http://localhost:3000` in your browser.
 ## 📁 Project Structure
 
 ```
-skill-verify/
+SkillBridge/
 ├── index.html          # Main frontend app
 ├── style.css           # All styles
 ├── js/
@@ -92,7 +93,7 @@ skill-verify/
 │   ├── main.js         # App logic, routing, quiz proctoring
 │   └── certificate.js  # Certificate download
 └── server/
-    ├── server.js        # Express server + Gemini AI endpoints
+    ├── server.js        # Express server + Groq AI endpoints
     ├── .env.example     # Environment variable template
     └── package.json
 ```
@@ -104,12 +105,6 @@ skill-verify/
 After setting up, sign up as:
 - **Student** — Click "I am a Student" on the landing page
 - **Educator** — Click "I am an Educator" to access the educator dashboard
-
----
-
-## 📸 Screenshots
-
-> Add screenshots here after running the app
 
 ---
 

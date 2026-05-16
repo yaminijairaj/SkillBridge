@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge AI - Personalized Learning Roadmaps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <header>
+        <div class="logo" onclick="app.navigate('landing')">
+            <span class="logo-icon"><i class='bx bx-brain'></i></span>
+            <span class="logo-text">SkillBridge AI</span>
+        </div>
+        <nav id="nav-auth" class="auth-state" style="display: none; align-items: center;">
+            <a href="#" style="color: #fff; font-weight: 600; text-decoration: none; font-size: 1rem; cursor: pointer;"
+                onclick="app.openAuthModal('student', 'signin'); return false;">Login / Sign Up</a>
+        </nav>
+        <nav id="nav-user" class="auth-state" style="display: none;">
+            <span id="nav-user-name" style="margin-right: 1rem; font-weight: 500;"></span>
+            <button class="btn btn-secondary" onclick="app.navigate('dashboard')">Dashboard</button>
+            <button class="btn btn-secondary" style="border:none;" onclick="app.logout()">Log Out</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- View: Landing Page -->
+        <section id="view-landing" class="view active">
+            <div class="scroll-container">
+                <div class="sticky-wrapper">
+                    <!-- Hero Section -->
+                    <div id="particles-container"></div>
+                    <div id="landing-hero" class="hero-transform text-center" style="left: 0; right: 0;">
+
+                        <!-- Parallax UI Mockups -->
+                        <div class="parallax-card glass-card initial-fade-in"
+                            style="position: absolute; left: 10%; top: 10%; padding: 1rem; width: 200px; transform: rotate(-5deg); animation: revolve-float 9s infinite alternate; z-index: -1;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i class='bx bx-loader-circle bx-spin text-gradient' style="font-size: 1.8rem;"></i>
+                                <div style="text-align: left;">
+                                    <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">AI Analyzing...
+                                    </div>
+                                    <div style="font-size: 0.7rem; color: var(--text-muted);">Parsing resume data
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="parallax-card glass-card initial-fade-in delay-2"
+                            style="position: absolute; right: 10%; top: 60%; padding: 1rem; width: 220px; transform: rotate(5deg); animation: revolve-float 11s infinite alternate-reverse; z-index: -1;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i class='bx bxs-check-shield text-gradient glow' style="font-size: 1.8rem;"></i>
+                                <div style="text-align: left;">
+                                    <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">Skill Match:
+                                        95%</div>
+                                    <div style="font-size: 0.7rem; color: var(--text-muted);">Frontend Engineering
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="initial-fade-in">
+                            <h1 class="animate-revolve-float"
+                                style="font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem;">
+                                Bridge the Gap to Your <span class="text-gradient glow">Dream Career</span>
+                            </h1>
+                        </div>
+                        <p id="hero-desc" class="initial-fade-in delay-2"
+                            style="font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto;">
+                            Stop guessing what skills you need. Our AI analyzes your capabilities, measures your
+                            true
+                            aptitude, and generates a personalized learning roadmap.
+                        </p>
+
+
+                    </div>
+
+                    <!-- Role Selection Section -->
+                    <div id="landing-roles" class="section-sequence text-center" style="margin-top: 2rem;">
+                        <h3 class="mb-4">Get Started Today</h3>
+                        <div class="grid-2" style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
+                            <div class="role-card enlarge-item" style="text-align: center; border-width: 2px;"
+                                onclick="app.openAuthModal('student')">
+                                <i class='bx bxs-graduation text-gradient'
+                                    style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                <h3 class="mb-1" style="font-size: 1.5rem;">I am a Student</h3>
+                                <p class="text-muted" style="font-size: 0.95rem;">Analyze my skills, take the
+                                    aptitude test, and get my personalized learning roadmap.</p>
+                            </div>
+
+                            <div class="role-card enlarge-item" style="text-align: center; border-width: 2px;"
+                                onclick="app.openAuthModal('educator')">
+                                <i class='bx bxs-briefcase text-gradient'
+                                    style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                <h3 class="mb-1" style="font-size: 1.5rem;">I am an Educator</h3>
+                                <p class="text-muted" style="font-size: 0.95rem;">Manage talent pools, view
+                                    candidate true-skill assessments, and create custom learning paths.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sticky Storytelling Section -->
+            <div id="story-scroll" style="position: relative; margin-top: 20vh; padding-bottom: 20vh;">
+                <div
+                    style="max-width: 1200px; margin: 0 auto; display: flex; gap: 4rem; position: relative; padding: 0 5%; flex-wrap: wrap;">
+
+                    <!-- Left: Text blocks -->
+                    <div class="story-text-column" style="flex: 1; min-width: 300px; padding: 30vh 0;">
+                        <div class="story-block active" data-step="1"
+                            style="height: 50vh; display: flex; flex-direction: column; justify-content: center; opacity: 1; transition: opacity 0.5s;">
+                            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;"><span class="text-gradient">Step
+                                    1:</span> Resume Analysis</h2>
+                            <p class="text-muted" style="font-size: 1.2rem;">Our AI instantly extracts your skills,
+                                experience, and education from your resume.</p>
+                        </div>
+                        <div class="story-block" data-step="2"
+                            style="height: 50vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.3; transition: opacity 0.5s;">
+                            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;"><span class="text-gradient">Step
+                                    2:</span> Skill Gap Detection</h2>
+                            <p class="text-muted" style="font-size: 1.2rem;">Compare your profile against industry
+                                standards and instantly see where you need to improve.</p>
+                        </div>
+                        <div class="story-block" data-step="3"
+                            style="height: 50vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.3; transition: opacity 0.5s;">
+                            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;"><span class="text-gradient">Step
+                                    3:</span> Learning Roadmap</h2>
+                            <p class="text-muted" style="font-size: 1.2rem;">Get a step-by-step personalized
+                                learning path tailored exactly to your missing skills.</p>
+                        </div>
+                        <div class="story-block" data-step="4"
+                            style="height: 50vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.3; transition: opacity 0.5s;">
+                            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;"><span class="text-gradient">Step
+                                    4:</span> Career Readiness</h2>
+                            <p class="text-muted" style="font-size: 1.2rem;">Track your progress on your career
+                                dashboard as you master new skills and increase your match rate.</p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Sticky UI Mockup -->
+                    <div class="story-visual-column"
+                        style="flex: 1; min-width: 300px; position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center;">
+                        <div class="glass-card mockup-container"
+                            style="width: 100%; height: 60vh; position: relative; overflow: hidden; background: rgba(10, 15, 25, 0.6); display: flex; align-items: center; justify-content: center;">
+
+                            <!-- Mockup 1: Analysis -->
+                            <div class="mockup-step" id="mockup-1"
+                                style="position: absolute; inset: 2rem; display: flex; flex-direction: column; opacity: 1; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(0);">
+                                <div class="resume-doc"
+                                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1.5rem; flex: 1; position: relative; overflow: hidden;">
+                                    <div style="font-weight: bold; margin-bottom: 1rem; color: #fff;">Resume.pdf
+                                    </div>
+                                    <div
+                                        style="height: 10px; width: 60%; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 0.8rem;">
+                                    </div>
+                                    <div
+                                        style="height: 8px; width: 80%; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 0.5rem;">
+                                    </div>
+                                    <div
+                                        style="height: 8px; width: 70%; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 0.5rem;">
+                                    </div>
+                                    <div
+                                        style="height: 8px; width: 90%; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 1.5rem;">
+                                    </div>
+                                    <div
+                                        style="height: 10px; width: 50%; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 0.8rem;">
+                                    </div>
+                                    <div
+                                        style="height: 8px; width: 85%; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 0.5rem;">
+                                    </div>
+                                    <div
+                                        style="height: 8px; width: 65%; background: rgba(255,255,255,0.05); border-radius: 4px;">
+                                    </div>
+                                    <div class="scan-line"
+                                        style="position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--accent-cyan); box-shadow: 0 0 15px var(--accent-cyan); opacity: 0;">
+                                    </div>
+                                </div>
+                                <div class="detected-skills"
+                                    style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                                    <span class="skill-tag-anim"
+                                        style="padding: 0.3rem 0.8rem; background: rgba(0, 243, 255, 0.1); border: 1px solid var(--accent-cyan); border-radius: 20px; font-size: 0.75rem; color: var(--accent-cyan); opacity: 0; transform: translateY(10px);">React</span>
+                                    <span class="skill-tag-anim"
+                                        style="padding: 0.3rem 0.8rem; background: rgba(0, 243, 255, 0.1); border: 1px solid var(--accent-cyan); border-radius: 20px; font-size: 0.75rem; color: var(--accent-cyan); opacity: 0; transform: translateY(10px);">Node.js</span>
+                                    <span class="skill-tag-anim"
+                                        style="padding: 0.3rem 0.8rem; background: rgba(0, 243, 255, 0.1); border: 1px solid var(--accent-cyan); border-radius: 20px; font-size: 0.75rem; color: var(--accent-cyan); opacity: 0; transform: translateY(10px);">TypeScript</span>
+                                </div>
+                            </div>
+
+                            <!-- Mockup 2: Gap Detection -->
+                            <div class="mockup-step" id="mockup-2"
+                                style="position: absolute; inset: 2rem; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; pointer-events: none;">
+                                <div style="font-weight: bold; color: #fff; margin-bottom: 0.5rem;">Skill Match vs
+                                    Industry Standard</div>
+                                <div class="bar-chart-row" style="display: flex; align-items: center; gap: 1rem;">
+                                    <div
+                                        style="width: 80px; font-size: 0.8rem; color: var(--text-muted); text-align: right;">
+                                        React</div>
+                                    <div
+                                        style="flex: 1; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; position: relative;">
+                                        <div class="bar-fill"
+                                            style="position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--accent-cyan); border-radius: 6px; transition: width 1s ease 0.2s;"
+                                            data-width="90%"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-row" style="display: flex; align-items: center; gap: 1rem;">
+                                    <div
+                                        style="width: 80px; font-size: 0.8rem; color: var(--text-muted); text-align: right;">
+                                        Node.js</div>
+                                    <div
+                                        style="flex: 1; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; position: relative;">
+                                        <div class="bar-fill"
+                                            style="position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--accent-cyan); border-radius: 6px; transition: width 1s ease 0.4s;"
+                                            data-width="75%"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-row" style="display: flex; align-items: center; gap: 1rem;">
+                                    <div
+                                        style="width: 80px; font-size: 0.8rem; color: var(--text-muted); text-align: right;">
+                                        Python</div>
+                                    <div
+                                        style="flex: 1; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; position: relative;">
+                                        <div class="bar-fill missing-skill"
+                                            style="position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #f85149; border-radius: 6px; transition: width 1s ease 0.6s;"
+                                            data-width="20%"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-row" style="display: flex; align-items: center; gap: 1rem;">
+                                    <div
+                                        style="width: 80px; font-size: 0.8rem; color: var(--text-muted); text-align: right;">
+                                        AWS</div>
+                                    <div
+                                        style="flex: 1; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; position: relative;">
+                                        <div class="bar-fill missing-skill"
+                                            style="position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #f85149; border-radius: 6px; transition: width 1s ease 0.8s;"
+                                            data-width="10%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mockup 3: Roadmap -->
+                            <div class="mockup-step" id="mockup-3"
+                                style="position: absolute; inset: 2rem; display: flex; flex-direction: column; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; pointer-events: none; overflow: hidden;">
+                                <div style="font-weight: bold; color: #fff; margin-bottom: 1.5rem;">Recommended
+                                    Learning Path</div>
+                                <div
+                                    style="position: relative; padding-left: 20px; flex: 1; display: flex; flex-direction: column; gap: 1.5rem;">
+                                    <div class="timeline-line"
+                                        style="position: absolute; left: 7px; top: 10px; bottom: 10px; width: 2px; background: rgba(255,255,255,0.1);">
+                                        <div class="timeline-progress"
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 0; background: var(--accent-green); transition: height 1.5s ease 0.5s;">
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item"
+                                        style="position: relative; opacity: 0; transform: translateX(20px); transition: all 0.5s ease 0.3s;">
+                                        <div
+                                            style="position: absolute; left: -25px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green);">
+                                        </div>
+                                        <div
+                                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(57,255,20,0.3); border-radius: 6px; padding: 0.8rem;">
+                                            <div
+                                                style="font-size: 0.85rem; color: var(--accent-green); margin-bottom: 0.2rem;">
+                                                <i class='bx bx-check'></i> Completed
+                                            </div>
+                                            <div style="font-size: 0.95rem; color: #fff;">Advanced React Patterns
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item"
+                                        style="position: relative; opacity: 0; transform: translateX(20px); transition: all 0.5s ease 0.6s;">
+                                        <div
+                                            style="position: absolute; left: -25px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);">
+                                        </div>
+                                        <div
+                                            style="background: rgba(0,243,255,0.05); border: 1px solid rgba(0,243,255,0.3); border-radius: 6px; padding: 0.8rem;">
+                                            <div
+                                                style="font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 0.2rem;">
+                                                <i class='bx bx-loader-alt bx-spin'></i> In Progress
+                                            </div>
+                                            <div style="font-size: 0.95rem; color: #fff;">Python for Data Science
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-item"
+                                        style="position: relative; opacity: 0; transform: translateX(20px); transition: all 0.5s ease 0.9s;">
+                                        <div
+                                            style="position: absolute; left: -25px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.2);">
+                                        </div>
+                                        <div
+                                            style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 0.8rem;">
+                                            <div
+                                                style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.2rem;">
+                                                <i class='bx bx-lock-alt'></i> Locked
+                                            </div>
+                                            <div style="font-size: 0.95rem; color: var(--text-muted);">AWS Cloud
+                                                Practitioner</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mockup 4: Dashboard -->
+                            <div class="mockup-step" id="mockup-4"
+                                style="position: absolute; inset: 2rem; display: flex; flex-direction: column; gap: 1rem; opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;">
+                                <div style="font-weight: bold; color: #fff;">Career Readiness Dashboard</div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div
+                                        style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="readiness-score"
+                                            style="font-size: 2.5rem; font-weight: bold; color: var(--accent-cyan);">
+                                            0%</div>
+                                        <div
+                                            style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">
+                                            Match Rate</div>
+                                    </div>
+                                    <div
+                                        style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="skills-count"
+                                            style="font-size: 2.5rem; font-weight: bold; color: var(--accent-green);">
+                                            0</div>
+                                        <div
+                                            style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">
+                                            Verified Skills</div>
+                                    </div>
+                                </div>
+                                <div
+                                    style="flex: 1; background: rgba(255,255,255,0.03); border-radius: 8px; position: relative; overflow: hidden; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.05);">
+                                    <svg viewBox="0 0 100 40" preserveAspectRatio="none"
+                                        style="position: absolute; bottom: 0; width: 100%; height: 100%;">
+                                        <path class="graph-fill"
+                                            d="M0 40 L0 30 L20 25 L40 35 L60 15 L80 20 L100 5 L100 40 Z"
+                                            fill="rgba(0, 243, 255, 0.15)"
+                                            style="opacity: 0; transition: opacity 1s ease 1s;" />
+                                        <polyline class="graph-line" points="0 30 20 25 40 35 60 15 80 20 100 5"
+                                            fill="none" stroke="var(--accent-cyan)" stroke-width="2"
+                                            style="stroke-dasharray: 200; stroke-dashoffset: 200; transition: stroke-dashoffset 1.5s ease-out 0.2s;" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works Section -->
+            <div id="how-it-works"
+                style="margin-top: 0vh; padding: 10vh 0; width: 100%; max-width: 1000px; margin-left: auto; margin-right: auto;">
+                <div class="text-center mb-4">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">How It <span class="text-gradient">Works</span>
+                    </h2>
+                    <p class="text-muted" style="font-size: 1.2rem;">A simple path from your current skills to your
+                        dream career.</p>
+                </div>
+
+                <div style="margin: 4rem auto 0; position: relative; padding: 0 1rem; perspective: 1000px;">
+                    <!-- SVGs for connecting lines -->
+                    <svg style="position: absolute; top: 40px; left: 10%; width: 80%; height: 50px; z-index: 0; pointer-events: none;"
+                        preserveAspectRatio="none">
+                        <line x1="0" y1="0" x2="100%" y2="0" stroke="var(--border-color)" stroke-width="2"
+                            stroke-dasharray="10 10" />
+                        <line class="animated-flow-line" x1="0" y1="0" x2="100%" y2="0" stroke="var(--accent-cyan)"
+                            stroke-width="3" stroke-dasharray="1000" stroke-dashoffset="1000" />
+                    </svg>
+
+                    <div style="display: flex; justify-content: space-between; position: relative; z-index: 1;">
+                        <!-- Step 1 -->
+                        <div class="flow-step text-center stagger-item flip-item" style="width: 120px;">
+                            <div
+                                style="width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 50%; background: var(--glass-bg); border: 2px solid var(--accent-cyan); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,243,255,0.2); transition: all 0.3s ease;">
+                                <i class='bx bx-upload' style="font-size: 2.5rem; color: var(--accent-cyan);"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Upload Resume</h4>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flow-step text-center stagger-item flip-item" style="width: 120px;">
+                            <div
+                                style="width: 80px; height: 80px; margin: -20px auto 1.5rem; border-radius: 50%; background: var(--glass-bg); border: 2px solid var(--accent-cyan); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,243,255,0.2); transition: all 0.3s ease;">
+                                <i class='bx bx-brain' style="font-size: 2.5rem; color: var(--accent-cyan);"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">AI Analysis</h4>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flow-step text-center stagger-item flip-item" style="width: 120px;">
+                            <div
+                                style="width: 80px; height: 80px; margin: -40px auto 1.5rem; border-radius: 50%; background: var(--glass-bg); border: 2px solid var(--accent-green); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(57,255,20,0.2); transition: all 0.3s ease;">
+                                <i class='bx bx-target-lock' style="font-size: 2.5rem; color: var(--accent-green);"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Gap Detection</h4>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="flow-step text-center stagger-item flip-item" style="width: 120px;">
+                            <div
+                                style="width: 80px; height: 80px; margin: -20px auto 1.5rem; border-radius: 50%; background: var(--glass-bg); border: 2px solid var(--accent-green); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(57,255,20,0.2); transition: all 0.3s ease;">
+                                <i class='bx bx-map-alt' style="font-size: 2.5rem; color: var(--accent-green);"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Learning Path</h4>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="flow-step text-center stagger-item flip-item" style="width: 120px;">
+                            <div
+                                style="width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 50%; background: var(--glass-bg); border: 2px solid var(--accent-cyan); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,243,255,0.2); transition: all 0.3s ease;">
+                                <i class='bx bxs-rocket' style="font-size: 2.5rem; color: var(--accent-cyan);"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Career Growth</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div id="cta-section"
+                style="padding: 15vh 0; text-align: center; position: relative; overflow: hidden; width: 100%;">
+
+
+                <div style="max-width: 800px; margin: 0 auto; position: relative; z-index: 1; padding: 0 5%;">
+                    <h2 style="font-size: 3.5rem; margin-bottom: 1.5rem;">Ready to <span class="text-gradient">Bridge
+                            the Gap?</span></h2>
+
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- View: Login -->
+        <section id="view-login" class="view">
+            <div class="auth-container glass-card">
+                <div class="auth-header">
+                    <h2>Welcome Back</h2>
+                    <p class="text-muted">Log in to continue your learning journey.</p>
+                </div>
+                <form id="login-form" onsubmit="app.handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" class="form-control" placeholder="you@example.com" required
+                            value="student@test.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" placeholder="••••••••" required
+                            value="password123">
+                    </div>
+                    <p class="auth-demo text-muted">Demo account: student@test.com / password123</p>
+                    <p id="login-feedback" class="auth-feedback" style="display: none;"></p>
+                    <button type="submit" class="btn btn-primary btn-block mt-2">Log In</button>
+                    <p class="text-center mt-3 text-muted">
+                        Don't have an account? <a href="#" onclick="app.navigate('signup'); return false;">Sign
+                            up</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <!-- View: Signup -->
+        <section id="view-signup" class="view">
+            <div class="auth-container glass-card">
+                <div class="auth-header">
+                    <h2>Create Account</h2>
+                    <p class="text-muted">Join SkillBridge AI to launch your career.</p>
+                </div>
+                <form id="signup-form" onsubmit="app.handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" class="form-control" placeholder="you@example.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" class="form-control" placeholder="••••••••"
+                            required>
+                    </div>
+                    <p id="signup-feedback" class="auth-feedback" style="display: none;"></p>
+                    <button type="submit" class="btn btn-primary btn-block mt-2">Sign Up</button>
+                    <p class="text-center mt-3 text-muted">
+                        Already have an account? <a href="#" onclick="app.navigate('login'); return false;">Log
+                            in</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <!-- View: Dashboard -->
+        <section id="view-dashboard" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                <div>
+                    <h2 class="mb-1">Dashboard</h2>
+                    <p class="text-muted">Track your progress and manage your profile.</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1.5rem;">
+                    <div id="dash-guest-login" style="display: none; font-size: 0.9rem; text-align: right;">
+                        <a href="#" onclick="app.openAuthModal('student', 'signin'); return false;"
+                            style="font-weight: 600;">Log In</a>
+                        <span class="text-muted" style="margin: 0 0.5rem;">or</span>
+                        <a href="#" onclick="app.openAuthModal('student', 'signup'); return false;"
+                            style="font-weight: 600;">Create Account</a>
+                    </div>
+                    <button class="btn btn-primary" onclick="app.navigate('input')">Update Skills / Goal</button>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="dashboard-empty" class="glass-card text-center" style="padding: 4rem 2rem; display: none;">
+                <i class='bx bx-rocket text-gradient' style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                <h3 class="mb-2">Ready to bridge the gap?</h3>
+                <p class="text-muted mb-3" style="max-width: 400px; margin-left: auto; margin-right: auto;">You
+                    haven't
+                    set a career goal or uploaded your skills yet. Let's get started on your personalized roadmap!
+                </p>
+                <button class="btn btn-primary" onclick="app.navigate('input')">Start Setup</button>
+            </div>
+
+            <!-- Active Dashboard Content (Hidden by default, shown via JS) -->
+            <div id="dashboard-content" style="display: none;">
+                <div class="grid-3 mb-4">
+                    <div class="glass-card">
+                        <h4 class="text-muted mb-1"
+                            style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Target Role
+                        </h4>
+                        <h3 id="dash-role-title" class="text-gradient" style="font-size: 1.8rem;">Loading...</h3>
+                    </div>
+                    <div class="glass-card">
+                        <h4 class="text-muted mb-1"
+                            style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Employability
+                            Score</h4>
+                        <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                            <h3 id="dash-score" style="font-size: 2.5rem; color: var(--neon-green);">0%</h3>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h4 class="text-muted mb-1"
+                            style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Skills
+                            Mastered
+                        </h4>
+                        <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                            <h3 id="dash-learned-skills" style="font-size: 2.5rem;">0</h3>
+                            <span class="text-muted">/ <span id="dash-total-skills">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Progress Section -->
+                    <div class="glass-card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3>Current Roadmap</h3>
+                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;"
+                                onclick="app.navigate('roadmap')">View Full Roadmap</button>
+                        </div>
+                        <div id="dash-roadmap-preview">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Skills Summary -->
+                    <div class="glass-card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3>Skill Profile</h3>
+                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;"
+                                onclick="app.navigate('analysis')">View Detailed Gap</button>
+                        </div>
+
+                        <div class="mb-3">
+                            <h4 class="text-muted mb-2" style="font-size: 0.9rem;">Your Skills (<span
+                                    id="dash-existing-count">0</span>)</h4>
+                            <div id="dash-existing-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <!-- Tags -->
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-muted mb-2" style="font-size: 0.9rem;">Missing Skills (<span
+                                    id="dash-missing-count">0</span>)</h4>
+                            <div id="dash-missing-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <!-- Tags -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Input Skills & Goal -->
+        <section id="view-input" class="view">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 class="text-center mb-1">Build Your Profile</h2>
+                <p class="text-center text-muted mb-4">Tell us what you know and where you want to go.</p>
+
+                <div class="glass-card mb-4" id="step-1-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div
+                            style="background: var(--neon-blue); color: #000; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                            1</div>
+                        <h3 class="m-0">Select Target Role</h3>
+                    </div>
+                    <div class="grid-3" id="role-selector">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="glass-card mb-4 opacity-50" id="step-2-card"
+                    style="pointer-events: none; opacity: 0.5; transition: opacity 0.3s;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div
+                            style="background: var(--neon-green); color: #000; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                            2</div>
+                        <h3 class="m-0">Provide Current Skills</h3>
+                    </div>
+
+                    <div class="grid-2">
+                        <div style="border: 2px dashed var(--border-color); border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer;"
+                            onclick="document.getElementById('resume-upload').click()">
+                            <i class='bx bx-upload text-muted' style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                            <h4>Upload Resume</h4>
+                            <p class="text-muted" style="font-size: 0.9rem;">PDF, DOCX (AI will extract skills)</p>
+                            <input type="file" id="resume-upload" hidden accept=".pdf,.docx"
+                                onchange="app.handleFileUpload(event)">
+                        </div>
+
+                        <div>
+                            <div class="form-group mb-2">
+                                <label>Or Add Manually</label>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="text" id="manual-skill-input" class="form-control"
+                                        placeholder="e.g. JavaScript, Python"
+                                        onkeypress="if(event.key === 'Enter') app.addManualSkill()">
+                                    <button class="btn btn-secondary" onclick="app.addManualSkill()">Add</button>
+                                </div>
+                            </div>
+                            <div id="manual-skills-container"
+                                style="display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 50px; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 8px;">
+                                <!-- Tags -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" id="btn-analyze"
+                            style="padding: 1rem 3rem; font-size: 1.1rem; display: none;"
+                            onclick="app.runAnalysis()">Analyze Skill Gap & Generate Roadmap <i
+                                class='bx bx-right-arrow-alt'></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Analysis Results -->
+        <section id="view-analysis" class="view">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div class="text-center mb-4">
+                    <h2 class="mb-1">Skill Gap Analysis</h2>
+                    <p class="text-muted">Comparing your profile to <span id="analysis-role-name"
+                            class="text-gradient font-bold" style="font-weight:700;">--</span> requirements.</p>
+                </div>
+
+                <div class="glass-card mb-4" style="text-align: center; padding: 3rem 2rem;">
+                    <h3 class="mb-2">Employability Match</h3>
+                    <div class="progress-circle-container"
+                        style="position: relative; width: 150px; height: 150px; margin: 0 auto 1.5rem auto;">
+                        <svg viewBox="0 0 36 36" style="width: 100%; height: 100%;">
+                            <path class="circle-bg"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="var(--border-color)" stroke-width="3" />
+                            <path id="match-circle" class="circle" stroke-dasharray="0, 100"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="var(--neon-green)" stroke-width="3"
+                                style="transition: stroke-dasharray 1s ease-out;" />
+                        </svg>
+                        <div id="match-percentage"
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; font-family: var(--font-display); font-weight: 700; color: #fff;">
+                            0%</div>
+                    </div>
+                    <p class="text-muted">Based on matched required skills.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="glass-card">
+                        <h3 class="mb-3" style="display: flex; align-items: center; gap: 0.5rem;"><i
+                                class='bx bx-check-circle' style="color: var(--success);"></i> Existing Skills</h3>
+                        <div id="analysis-existing-list" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <!-- Items -->
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h3 class="mb-3" style="display: flex; align-items: center; gap: 0.5rem;"><i
+                                class='bx bx-x-circle' style="color: var(--danger);"></i> Missing Skills</h3>
+                        <div id="analysis-missing-list" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <!-- Items -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary btn-lg" style="padding: 1rem 3rem; font-size: 1.1rem;"
+                        onclick="app.navigate('roadmap')">View Personalized Learning Roadmap <i
+                            class='bx bx-map-alt'></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Roadmap -->
+        <section id="view-roadmap" class="view">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div>
+                        <h2 class="mb-1">Your Learning Roadmap</h2>
+                        <p class="text-muted">Structured plan to master <span id="roadmap-role-name"
+                                class="font-bold text-gradient">--</span> skills.</p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="app.navigate('dashboard')">Back to Dashboard</button>
+                </div>
+
+                <div class="roadmap-container" id="roadmap-stages">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Educator Portal -->
+        <section id="view-educator-portal" class="view">
+            <div style="max-width: 1100px; margin: 0 auto;">
+
+                <!-- Header -->
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                    <div>
+                        <h2 class="mb-1"><i class='bx bxs-briefcase text-gradient' style="margin-right:0.5rem;"></i>Educator Portal</h2>
+                        <p class="text-muted">Monitor student skill profiles and career readiness assessments.</p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="app.logout()"><i class='bx bx-log-out' style="margin-right:0.4rem;"></i>Log Out</button>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="grid-3 mb-4">
+                    <div class="glass-card text-center">
+                        <h4 class="text-muted mb-1" style="font-size:0.8rem; text-transform:uppercase; letter-spacing:1px;">Total Students</h4>
+                        <h2 id="edu-stat-total" style="font-size:2.8rem; font-weight:800; background:linear-gradient(135deg,#818cf8,#c084fc); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">—</h2>
+                    </div>
+                    <div class="glass-card text-center">
+                        <h4 class="text-muted mb-1" style="font-size:0.8rem; text-transform:uppercase; letter-spacing:1px;">Avg Match Score</h4>
+                        <h2 id="edu-stat-avg-score" style="font-size:2.8rem; font-weight:800; color:var(--neon-green);">—</h2>
+                    </div>
+                    <div class="glass-card text-center">
+                        <h4 class="text-muted mb-1" style="font-size:0.8rem; text-transform:uppercase; letter-spacing:1px;">Assessments Taken</h4>
+                        <h2 id="edu-stat-tests" style="font-size:2.8rem; font-weight:800; color:var(--accent-cyan);">—</h2>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="glass-card mb-4" style="padding:0.85rem 1.5rem;">
+                    <div style="display:flex; gap:0.75rem; align-items:center;">
+                        <i class='bx bx-search text-muted' style="font-size:1.3rem; flex-shrink:0;"></i>
+                        <input type="text" id="student-search" class="form-control"
+                            placeholder="Search by name, target role, or skill..."
+                            oninput="UI.filterStudentRoster(this.value)"
+                            style="border:none; background:transparent; padding:0; font-size:1rem;">
+                    </div>
+                </div>
+
+                <!-- Student Roster -->
+                <div class="glass-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                        <h3 style="margin:0;">Student Roster</h3>
+                        <span class="text-muted" style="font-size:0.85rem;">Click any row to view details</span>
+                    </div>
+                    <div id="student-roster-container">
+                        <p class="text-muted text-center" style="padding:3rem;">Loading students...</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Student Detail Modal -->
+            <div id="student-detail-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center; padding:2rem;">
+                <div class="glass-card" style="max-width:580px; width:100%; max-height:85vh; overflow-y:auto; position:relative; border-color:rgba(99,102,241,0.4); box-shadow:0 0 40px rgba(99,102,241,0.15);">
+                    <button onclick="UI.closeStudentDetail()" style="position:absolute; top:1rem; right:1rem; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:1.2rem; cursor:pointer; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; transition:background 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.15)'" onmouseleave="this.style.background='rgba(255,255,255,0.07)'">
+                        <i class='bx bx-x'></i>
+                    </button>
+                    <div id="student-detail-content" style="padding:0.5rem 0;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Skill Profile Summary -->
+        <section id="view-skill-profile" class="view">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="text-center mb-4">
+                    <h2 class="mb-1">Your Skill Profile</h2>
+                    <p class="text-muted">We've analyzed your input and estimated your current competency levels.
+                    </p>
+                </div>
+
+                <div class="glass-card mb-4">
+                    <h3 class="mb-3" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class='bx bx-brain text-gradient'></i> Detected Technical Skills
+                    </h3>
+
+                    <div id="profile-skills-list" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- JS injects: <div class="skill-row"><span>React</span> <span class="badge intermediate">Intermediate</span></div> -->
+                    </div>
+                </div>
+
+                <div class="text-center mt-4 glass-card"
+                    style="background: rgba(0, 243, 255, 0.05); border-color: rgba(0, 243, 255, 0.3);">
+                    <h3 class="mb-2">Next Step: Aptitude Assessment</h3>
+                    <p class="text-muted mb-4" style="max-width: 500px; margin: 0 auto;">To get an accurate measure
+                        of
+                        your true competency, we need to test your logical reasoning and problem-solving skills.</p>
+                    <p id="quiz-ban-message" class="quiz-ban-message" style="display: none;"></p>
+                    <div id="quiz-tests-container" class="quiz-tests-grid">
+                        <p class="text-muted">Loading aptitude tests...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Aptitude Assessment (Quiz) -->
+        <section id="view-aptitude-quiz" class="view">
+            <div style="max-width: 700px; margin: 0 auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div>
+                        <h2 class="m-0">Aptitude Assessment</h2>
+                        <p id="quiz-test-title" class="text-muted" style="margin-top: 0.35rem;">Aptitude Test</p>
+                    </div>
+                    <div class="text-muted font-bold">
+                        Question <span id="quiz-current-q">1</span> of <span id="quiz-total-q">4</span>
+                    </div>
+                </div>
+
+                <div id="quiz-warning-banner" class="glass-card quiz-warning-banner mb-3">
+                    <strong>Warning:</strong>
+                    <span id="quiz-warning-text">Answer-copying behavior during the quiz is prohibited. Opening
+                        another tab, switching windows, or using copy/paste will close the test immediately and mark
+                        it as copied.</span>
+                </div>
+
+                <div id="quiz-closed-message" class="glass-card quiz-closed-message mb-4" style="display: none;">
+                    <h3 id="quiz-closed-title" class="mb-2">Test Closed</h3>
+                    <p id="quiz-closed-text">Copied behavior detected. This attempt has been marked as copied.</p>
+                    <button class="btn btn-secondary mt-3" onclick="app.navigate('skill-profile')">Back to Skill
+                        Profile</button>
+                </div>
+
+                <div class="glass-card mb-4" id="quiz-container">
+                    <div class="progress-bar-bg mb-4">
+                        <div class="progress-bar-fill" id="quiz-progress" style="width: 25%;"></div>
+                    </div>
+
+                    <h3 id="quiz-question-text" style="font-size: 1.3rem; margin-bottom: 2rem; line-height: 1.5;">
+                        Question text goes here?</h3>
+
+                    <div id="quiz-options-list" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div id="quiz-controls" style="display: flex; justify-content: space-between; align-items: center;">
+                    <button class="btn btn-secondary" onclick="app.navigate('skill-profile')">Cancel Test</button>
+                    <button class="btn btn-primary" id="btn-quiz-next" onclick="app.nextQuizQuestion()">Next
+                        Question</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer
+        style="padding: 2rem 5%; border-top: 1px solid var(--border-color); margin-top: 4rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+        <p>&copy; 2026 SkillBridge AI. Built for the future of learning.</p>
+    </footer>
+
+    <!-- Auth Modal Overlay -->
+    <div id="auth-modal-overlay" class="auth-modal-overlay" onclick="app.closeAuthModal(event)">
+        <div class="auth-modal">
+            <button class="auth-modal-close" onclick="app.closeAuthModal(null)" aria-label="Close"><i
+                    class='bx bx-x'></i></button>
+
+            <div class="auth-role-switcher">
+                <button class="role-switch-btn active" id="role-btn-student" onclick="app.switchAuthRole('student')">
+                    <i class='bx bxs-graduation'></i> Student
+                </button>
+                <button class="role-switch-btn" id="role-btn-educator" onclick="app.switchAuthRole('educator')">
+                    <i class='bx bxs-briefcase'></i> Educator
+                </button>
+            </div>
+
+            <div class="auth-modal-tabs">
+                <button class="auth-modal-tab active" id="tab-signin" onclick="app.switchAuthTab('signin')">Sign
+                    In</button>
+                <button class="auth-modal-tab" id="tab-signup" onclick="app.switchAuthTab('signup')">Create
+                    Account</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <div id="modal-signin-form" class="auth-modal-form active">
+                <form onsubmit="app.handleLogin(event)">
+                    <div class="form-group">
+                        <label for="modal-login-email">Email</label>
+                        <input type="email" id="modal-login-email" class="form-control" placeholder="you@example.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-login-password">Password</label>
+                        <input type="password" id="modal-login-password" class="form-control" placeholder="••••••••"
+                            required>
+                    </div>
+                    <p id="modal-login-feedback" class="auth-feedback" style="display:none;"></p>
+                    <button type="submit" id="modal-login-submit" class="btn btn-primary btn-block mt-2">Sign
+                        In</button>
+                    <p class="text-center mt-3 text-muted" style="font-size:0.9rem;">
+                        No account? <a href="#" onclick="app.switchAuthTab('signup'); return false;">Create one</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Create Account Form -->
+            <div id="modal-signup-form" class="auth-modal-form">
+                <form onsubmit="app.handleSignup(event)">
+                    <div class="form-group">
+                        <label for="modal-signup-name">Full Name</label>
+                        <input type="text" id="modal-signup-name" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-signup-email">Email</label>
+                        <input type="email" id="modal-signup-email" class="form-control" placeholder="you@example.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-signup-password">Password</label>
+                        <input type="password" id="modal-signup-password" class="form-control" placeholder="••••••••"
+                            required>
+                    </div>
+                    <p id="modal-signup-feedback" class="auth-feedback" style="display:none;"></p>
+                    <button type="submit" id="modal-signup-submit" class="btn btn-primary btn-block mt-2">Sign
+                        Up</button>
+                    <p class="text-center mt-3 text-muted" style="font-size:0.9rem;">
+                        Already have an account? <a href="#" onclick="app.switchAuthTab('signin'); return false;">Sign
+                            in</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/certificate.js"></script>
+    <script src="js/originality.js"></script>
+    <script src="js/challenges.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/monitor.js"></script>
+</body>
+
+</html>

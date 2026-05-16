@@ -1,0 +1,14 @@
+John Doe
+Software Engineer
+Email: john.doe@example.com
+
+EXPERIENCE
+Frontend Developer
+- Built responsive applications using React and Redux.
+- Styled components using CSS and Tailwind.
+- Handled API requests using JavaScript (ES6+), Fetch API, and Axios.
+- Version control with Git and GitHub.
+- Basic understanding of Node.js and Express for backend mock servers.
+
+EDUCATION
+B.S. Computer Science

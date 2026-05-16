@@ -1,4 +1,4 @@
-# SkillBridge AI 🚀
+# SkillBridge AI
 
 > AI-powered career readiness platform that analyzes your skills, detects gaps, and generates personalized learning roadmaps.
 
@@ -8,7 +8,7 @@
 
 ---
 
-## ✨ Features
+## Features
 
 - **AI Resume Analysis** — Upload a PDF or DOCX and Groq AI extracts your skills automatically
 - **Skill Gap Detection** — Compare your profile against industry role requirements
@@ -19,7 +19,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -32,7 +32,7 @@
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 ### Prerequisites
 - Node.js 18+
@@ -79,7 +79,7 @@ Open `http://localhost:3000` in your browser.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 SkillBridge/
@@ -100,7 +100,7 @@ SkillBridge/
 
 ---
 
-## 👤 Demo Accounts
+## Demo Accounts
 
 After setting up, sign up as:
 - **Student** — Click "I am a Student" on the landing page
@@ -108,6 +108,6 @@ After setting up, sign up as:
 
 ---
 
-## 📄 License
+## License
 
 MIT License — free to use for educational purposes.

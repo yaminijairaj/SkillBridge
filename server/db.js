@@ -1,11 +1,10 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-const dbPath = path.join(__dirname, 'database.sqlite');
-// Initialize the database, logging queries if needed (uncomment for debugging)
-const db = new Database(dbPath/*, { verbose: console.log }*/);
+const dbPath = path.join(__dirname, 'skillbridge.db');
+const db = new Database(dbPath);
 
-// Create the users table if it doesn't exist
+// Create users table if it doesn't exist
 db.exec(`
     CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
@@ -13,15 +12,11 @@ db.exec(`
         email TEXT UNIQUE NOT NULL,
         passwordHash TEXT NOT NULL,
         salt TEXT NOT NULL,
+        profileData TEXT DEFAULT '{}',
         createdAt TEXT NOT NULL
     )
 `);
 
-try {
-    db.exec("ALTER TABLE users ADD COLUMN profileData TEXT DEFAULT '{}'");
-    console.log("Added profileData column to users table.");
-} catch (e) {
-    // Column already exists, safe to ignore
-}
+console.log('[DB] SQLite database initialized at:', dbPath);
 
 module.exports = db;

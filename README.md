@@ -1,113 +1,144 @@
-# SkillBridge AI
+# SkillBridge AI 🚀
 
-> AI-powered career readiness platform that analyzes your skills, detects gaps, and generates personalized learning roadmaps.
+> **AI-Powered Career Readiness & Skill Verification Platform**  
+> Bridge the gap between education and industry expectations with intelligent skill assessments, AI resume analysis, and dynamic learning roadmaps.
 
-![SkillBridge AI](https://img.shields.io/badge/Powered%20by-Groq%20AI-orange?style=for-the-badge)
-![Supabase](https://img.shields.io/badge/Database-Supabase-green?style=for-the-badge)
-![Node.js](https://img.shields.io/badge/Backend-Node.js-brightgreen?style=for-the-badge)
-
----
-
-## Features
-
-- **AI Resume Analysis** — Upload a PDF or DOCX and Groq AI extracts your skills automatically
-- **Skill Gap Detection** — Compare your profile against industry role requirements
-- **Personalized Roadmap** — Step-by-step learning plan with real documentation links
-- **Aptitude Testing** — AI-generated quizzes with anti-cheating proctoring
-- **Educator Portal** — Educators can monitor all student skill profiles and scores
-- **Certificate Generation** — Download a completion certificate as PNG
+[![Live Demo](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://skillbridge.onrender.com)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-SkillBridge-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yaminijairaj/SkillBridge)
+[![Groq AI](https://img.shields.io/badge/AI%20Engine-Groq%20(LLaMA%203.3)-f55036?style=for-the-badge)](https://groq.com)
+[![Supabase](https://img.shields.io/badge/Database-Supabase%20Cloud-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
+[![Node.js](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
 
 ---
 
-## Tech Stack
+## 🌟 Overview
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Vanilla HTML, CSS, JavaScript |
-| Backend | Node.js + Express |
-| Database & Auth | Supabase (PostgreSQL) |
-| AI | Groq (LLaMA 3.3 70B) |
-| PDF Parsing | pdf-parse |
-| DOCX Parsing | mammoth |
+**SkillBridge AI** helps students and aspiring developers evaluate their current technical skill sets against real-world job roles. Using intelligent AI extraction and verification workflows, the platform identifies missing technical requirements, offers tailored roadmaps with vetted resources, tests knowledge through proctored assessments, and provides educators with actionable batch analytics.
 
 ---
 
-## Running Locally
+## ✨ Key Features
+
+- 📄 **Smart Resume Analysis**: Upload resumes (PDF, DOCX, or TXT) to automatically extract core technical skills and tools via Groq AI (LLaMA 3.3 70B).
+- 🎯 **Skill Gap Analysis**: Compares a user's skills against real industry roles (Frontend, Backend, AI Engineer, Mobile App Developer, Data Analyst) and calculates a role match percentage.
+- 🗺️ **Personalized Learning Roadmaps**: Generates modular, weekly roadmaps with direct links to official documentation, courses, and interactive practice.
+- 📝 **Proctored AI Assessments**: Real-time adaptive technical and aptitude quizzes equipped with tab-switch warnings and integrity monitoring.
+- 📊 **Educator Dashboard**: Comprehensive analytics portal allowing educators to inspect class-wide skill distributions, student readiness, and test performance.
+- 📜 **Verifiable Certificates**: Auto-generates downloadable completion certificates upon passing skill evaluations.
+
+---
+
+## 🛠️ Architecture & Tech Stack
+
+```mermaid
+graph TD
+    User([User / Browser]) <-->|Static Files & API| Express[Express.js Server]
+    Express <-->|Auth & Profiles| Supabase[(Supabase Cloud DB)]
+    Express <-->|Resume & Gap Analysis| Groq[Groq AI LLaMA 3.3]
+```
+
+- **Frontend**: Vanilla JavaScript (ES6+), HTML5, CSS3, Boxicons, Canvas API (Certificates)
+- **Backend**: Node.js, Express.js, Multer
+- **AI / LLM Engine**: Groq Cloud SDK (`llama-3.3-70b-versatile`)
+- **Document Parsers**: `pdf-parse`, `mammoth` (Word .docx)
+- **Database & Auth**: Supabase (PostgreSQL with real-time support)
+- **Hosting**: Render
+
+---
+
+## 📁 Project Structure
+
+```text
+SkillBridge/
+├── index.html              # Main application single-page interface
+├── style.css               # Design system, glassmorphism, responsive styles
+├── dummy_resume.txt        # Sample resume file for quick testing
+├── js/
+│   ├── app.js              # Application bootstrapping
+│   ├── api.js              # Client-side API interactions
+│   ├── main.js             # Event listeners, flow orchestration, navigation
+│   ├── ui.js               # UI render functions & Educator view
+│   ├── state.js            # Reactive application state
+│   ├── supabase.js         # Supabase client setup
+│   ├── certificate.js      # Canvas-based certificate rendering
+│   ├── originality.js      # Integrity & proctoring logic
+│   ├── challenges.js       # Interactive challenges
+│   ├── editor.js           # Code playground & editor tools
+│   ├── monitor.js          # Activity & test monitoring
+│   └── timer.js            # Quiz timers & interval handlers
+└── server/
+    ├── server.js           # REST API & static file server
+    ├── db.js               # DB configuration
+    ├── package.json        # Server dependencies
+    └── .env.example        # Environment variable template
+```
+
+---
+
+## ⚡ Getting Started Locally
 
 ### Prerequisites
-- Node.js 18+
-- A [Supabase](https://supabase.com) account (free)
-- A [Groq](https://console.groq.com) API key (free)
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- Free [Groq API Key](https://console.groq.com)
+- Free [Supabase Account](https://supabase.com)
 
-### 1. Clone the repo
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/yaminijairaj/SkillBridge.git
 cd SkillBridge
 ```
 
-### 2. Set up Supabase
-1. Create a new Supabase project at [supabase.com](https://supabase.com)
-2. Go to **SQL Editor** and run the contents of [`supabase_setup.sql`](supabase_setup.sql)
-3. Go to **Authentication → Providers → Email** → turn ON **"Enable email provider"** and turn OFF **"Confirm email"**
-4. Copy your **Project URL** and **Publishable Key** from **Settings → API**
-
-### 3. Configure frontend
-Edit `js/supabase.js` and replace the placeholders:
-```js
-const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_YOUR_KEY';
-```
-
-### 4. Configure backend
+### 2. Configure Environment Variables
+Inside the `server/` directory, create a `.env` file:
 ```bash
 cd server
 cp .env.example .env
 ```
-Edit `server/.env`:
-```
+Populate `.env` with your credentials:
+```env
+PORT=3000
 GROQ_API_KEY=your_groq_api_key_here
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_KEY=your_supabase_anon_key
 ```
 
-### 5. Install and run
+### 3. Install Dependencies
 ```bash
-cd server
 npm install
+```
+
+### 4. Start the Application
+```bash
 node server.js
 ```
-
-Open `http://localhost:3000` in your browser.
-
----
-
-## Project Structure
-
-```
-SkillBridge/
-├── index.html          # Main frontend app
-├── style.css           # All styles
-├── js/
-│   ├── supabase.js     # Supabase client initialization
-│   ├── api.js          # API calls (Supabase + Node backend)
-│   ├── state.js        # Global state management
-│   ├── ui.js           # UI rendering and educator portal
-│   ├── main.js         # App logic, routing, quiz proctoring
-│   └── certificate.js  # Certificate download
-└── server/
-    ├── server.js        # Express server + Groq AI endpoints
-    ├── .env.example     # Environment variable template
-    └── package.json
-```
+The application will be running locally at:
+👉 **`http://localhost:3000`**
 
 ---
 
-## Demo Accounts
+## ☁️ Deployment (Render)
 
-After setting up, sign up as:
-- **Student** — Click "I am a Student" on the landing page
-- **Educator** — Click "I am an Educator" to access the educator dashboard
+This repository is optimized for quick one-click deployment on [Render](https://render.com):
+
+1. **New Web Service** → Connect your `SkillBridge` repository.
+2. Set **Root Directory** to `server`.
+3. Set **Build Command** to `npm install`.
+4. Set **Start Command** to `node server.js`.
+5. Add the following **Environment Variables**:
+   - `GROQ_API_KEY`
+   - `SUPABASE_URL`
+   - `SUPABASE_KEY`
+6. Click **Deploy Web Service**.
 
 ---
 
-## License
+## 🤝 Contributing
 
-MIT License — free to use for educational purposes.
+Contributions, issues, and feature requests are welcome!  
+Feel free to open an issue or submit a pull request to help improve the platform.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).

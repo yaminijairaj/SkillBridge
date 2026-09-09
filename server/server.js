@@ -8,10 +8,18 @@ const crypto = require('crypto');
 const pdf = require('pdf-parse');
 const mammoth = require('mammoth');
 const Groq = require('groq-sdk');
+const { createClient } = require('@supabase/supabase-js');
+const ws = require('ws');
 
 const app = express();
-const port = 3000;
-const dbSqlite = require('./db'); // SQLite database
+const port = process.env.PORT || 3000;
+
+// Supabase client
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://qgdfoshhmeigoqwaxdid.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_KEY || 'sb_publishable_ka0N3agUaLF_xPZkVJqRVQ_WIto7HHd';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    realtime: { transport: ws }
+});
 
 // Initialize Groq
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'MISSING_KEY' });
@@ -216,7 +224,7 @@ const db = {
 // --- API Endpoints ---
 
 // POST Auth Signup
-app.post('/api/auth/signup', (req, res) => {
+app.post('/api/auth/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body || {};
         const normalizedEmail = normalizeEmail(email);
@@ -235,21 +243,24 @@ app.post('/api/auth/signup', (req, res) => {
             return res.status(400).json({ success: false, error: 'Password must be at least 6 characters long.' });
         }
 
-        const stmtCheck = dbSqlite.prepare('SELECT * FROM users WHERE email = ?');
-        const existingUser = stmtCheck.get(normalizedEmail);
+        // Check if user already exists
+        const { data: existing } = await supabase
+            .from('users')
+            .select('id')
+            .eq('email', normalizedEmail)
+            .maybeSingle();
 
-        if (existingUser) {
+        if (existing) {
             return res.status(409).json({ success: false, error: 'This login is already created. Please log in instead.' });
         }
 
-        const newUser = buildUserRecord({
-            name: trimmedName,
-            email: normalizedEmail,
-            password: plainPassword
-        });
+        const newUser = buildUserRecord({ name: trimmedName, email: normalizedEmail, password: plainPassword });
 
-        const stmtInsert = dbSqlite.prepare('INSERT INTO users (id, name, email, passwordHash, salt, createdAt) VALUES (?, ?, ?, ?, ?, ?)');
-        stmtInsert.run(newUser.id, newUser.name, newUser.email, newUser.passwordHash, newUser.salt, newUser.createdAt);
+        const { error: insertError } = await supabase
+            .from('users')
+            .insert([{ id: newUser.id, name: newUser.name, email: newUser.email, passwordHash: newUser.passwordHash, salt: newUser.salt, createdAt: newUser.createdAt, profileData: '{}' }]);
+
+        if (insertError) throw insertError;
 
         res.status(201).json({
             success: true,
@@ -262,7 +273,7 @@ app.post('/api/auth/signup', (req, res) => {
 });
 
 // POST Auth Login
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, password } = req.body || {};
         const normalizedEmail = normalizeEmail(email);
@@ -272,18 +283,19 @@ app.post('/api/auth/login', (req, res) => {
             return res.status(400).json({ success: false, error: 'Email and password are required.' });
         }
 
-        console.log(req.body);
-        const stmt = dbSqlite.prepare('SELECT * FROM users WHERE email = ?');
-        const user = stmt.get(normalizedEmail);
-        console.log(user);
+        const { data: user, error: fetchError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', normalizedEmail)
+            .maybeSingle();
+
+        if (fetchError) throw fetchError;
 
         if (!user) {
             return res.status(404).json({ success: false, error: "User not found" });
         }
 
         const isValidPassword = verifyPassword(plainPassword, user);
-        console.log("Password match:", isValidPassword);
-
         if (!isValidPassword) {
             return res.status(401).json({ success: false, error: "Wrong password" });
         }
@@ -291,7 +303,7 @@ app.post('/api/auth/login', (req, res) => {
         let parsedProfile = {};
         try {
             if (user.profileData) {
-                parsedProfile = JSON.parse(user.profileData);
+                parsedProfile = typeof user.profileData === 'string' ? JSON.parse(user.profileData) : user.profileData;
             }
         } catch(e) { console.error("Could not parse profileData:", e); }
 
@@ -307,20 +319,19 @@ app.post('/api/auth/login', (req, res) => {
 });
 
 // POST /api/user/profile (Save profile data)
-app.post('/api/user/profile', (req, res) => {
+app.post('/api/user/profile', async (req, res) => {
     try {
         const { userId, profileData } = req.body;
         if (!userId) {
             return res.status(400).json({ success: false, error: 'User ID is required' });
         }
         
-        const dataStr = JSON.stringify(profileData || {});
-        const stmt = dbSqlite.prepare('UPDATE users SET profileData = ? WHERE id = ?');
-        const info = stmt.run(dataStr, userId);
+        const { error: updateError, count } = await supabase
+            .from('users')
+            .update({ profileData: JSON.stringify(profileData || {}) })
+            .eq('id', userId);
         
-        if (info.changes === 0) {
-            return res.status(404).json({ success: false, error: 'User not found' });
-        }
+        if (updateError) throw updateError;
         
         res.json({ success: true });
     } catch (error) {

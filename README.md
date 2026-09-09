@@ -3,11 +3,13 @@
 > **AI-Powered Career Readiness & Skill Verification Platform**  
 > Bridge the gap between education and industry expectations with intelligent skill assessments, AI resume analysis, and dynamic learning roadmaps.
 
-[![Live Demo](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://skillbridge.onrender.com)
+[![Live Demo](https://img.shields.io/badge/Live%20Website-Visit%20SkillBridge-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://skillbridge-iml8.onrender.com/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-SkillBridge-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yaminijairaj/SkillBridge)
 [![Groq AI](https://img.shields.io/badge/AI%20Engine-Groq%20(LLaMA%203.3)-f55036?style=for-the-badge)](https://groq.com)
 [![Supabase](https://img.shields.io/badge/Database-Supabase%20Cloud-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
 [![Node.js](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+
+🌐 **Live Application:** [https://skillbridge-iml8.onrender.com/](https://skillbridge-iml8.onrender.com/)
 
 ---
 
@@ -32,7 +34,7 @@
 
 ```mermaid
 graph TD
-    User([User / Browser]) <-->|Static Files & API| Express[Express.js Server]
+    User([User / Browser]) <-->|Web Interface & API| Express[Express.js Server]
     Express <-->|Auth & Profiles| Supabase[(Supabase Cloud DB)]
     Express <-->|Resume & Gap Analysis| Groq[Groq AI LLaMA 3.3]
 ```
@@ -42,7 +44,7 @@ graph TD
 - **AI / LLM Engine**: Groq Cloud SDK (`llama-3.3-70b-versatile`)
 - **Document Parsers**: `pdf-parse`, `mammoth` (Word .docx)
 - **Database & Auth**: Supabase (PostgreSQL with real-time support)
-- **Hosting**: Render
+- **Hosting & Deployment**: Render ([skillbridge-iml8.onrender.com](https://skillbridge-iml8.onrender.com/))
 
 ---
 
@@ -75,60 +77,18 @@ SkillBridge/
 
 ---
 
-## ⚡ Getting Started Locally
+## ☁️ Deployment Configuration
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- Free [Groq API Key](https://console.groq.com)
-- Free [Supabase Account](https://supabase.com)
+This project is deployed as a Web Service on **Render**:
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/yaminijairaj/SkillBridge.git
-cd SkillBridge
-```
-
-### 2. Configure Environment Variables
-Inside the `server/` directory, create a `.env` file:
-```bash
-cd server
-cp .env.example .env
-```
-Populate `.env` with your credentials:
-```env
-PORT=3000
-GROQ_API_KEY=your_groq_api_key_here
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_KEY=your_supabase_anon_key
-```
-
-### 3. Install Dependencies
-```bash
-npm install
-```
-
-### 4. Start the Application
-```bash
-node server.js
-```
-The application will be running locally at:
-👉 **`http://localhost:3000`**
-
----
-
-## ☁️ Deployment (Render)
-
-This repository is optimized for quick one-click deployment on [Render](https://render.com):
-
-1. **New Web Service** → Connect your `SkillBridge` repository.
-2. Set **Root Directory** to `server`.
-3. Set **Build Command** to `npm install`.
-4. Set **Start Command** to `node server.js`.
-5. Add the following **Environment Variables**:
-   - `GROQ_API_KEY`
-   - `SUPABASE_URL`
-   - `SUPABASE_KEY`
-6. Click **Deploy Web Service**.
+- **Live URL**: [https://skillbridge-iml8.onrender.com/](https://skillbridge-iml8.onrender.com/)
+- **Root Directory**: `server`
+- **Build Command**: `npm install`
+- **Start Command**: `node server.js`
+- **Environment Variables**:
+  - `GROQ_API_KEY`: Groq Cloud API credentials
+  - `SUPABASE_URL`: Supabase project connection URL
+  - `SUPABASE_KEY`: Supabase client access key
 
 ---
 

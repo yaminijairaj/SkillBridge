@@ -77,20 +77,6 @@ SkillBridge/
 
 ---
 
-## ☁️ Deployment Configuration
-
-This project is deployed as a Web Service on **Render**:
-
-- **Live URL**: [https://skillbridge-iml8.onrender.com/](https://skillbridge-iml8.onrender.com/)
-- **Root Directory**: `server`
-- **Build Command**: `npm install`
-- **Start Command**: `node server.js`
-- **Environment Variables**:
-  - `GROQ_API_KEY`: Groq Cloud API credentials
-  - `SUPABASE_URL`: Supabase project connection URL
-  - `SUPABASE_KEY`: Supabase client access key
-
----
 
 ## 🤝 Contributing
 
